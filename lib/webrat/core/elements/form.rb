@@ -110,7 +110,7 @@ module Webrat
       when :rack, :sinatra
         Rack::Utils.parse_nested_query(query_string)
       else
-        query_string.split('&').map {|query| { query.split('=').first => query.split('=').last }}
+        CGI.parse(query_string)
       end
     end
 
