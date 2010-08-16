@@ -16,11 +16,12 @@ module Webrat #:nodoc:
       super(absolute_url(url), http_method, data)
     end
 
-    def get(url, data, headers_argument_not_used = nil)
-      @response = mechanize.get(url, data)
+    def get(url, data, headers = nil)
+      options = {:url => url, :headers => headers, :params => data}
+      @response = mechanize.get(options)
     end
 
-    def post(url, data, headers_argument_not_used = nil)
+    def post(url, data, headers = nil)
       post_data = data.inject({}) do |memo, param|
         case param
         when Hash
@@ -36,7 +37,7 @@ module Webrat #:nodoc:
           memo
         end
       end
-      @response = mechanize.post(url, post_data)
+      @response = mechanize.post(url, post_data, headers)
     end
 
     def response_body
