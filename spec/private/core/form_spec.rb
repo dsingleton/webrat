@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "Multiple nested params" do
+describe "Multiple nested params and empty param" do
   it "should be corretly posted" do
     Webrat.configuration.mode = :rails
 
@@ -32,6 +32,8 @@ describe "Multiple nested params" do
             <input type="text" value="Jenny" name="user[family][parents][1][][name]" />
           </div>
         </div>
+        
+        <input type="text" name="emptyField" value="" />
         <input type="submit" />
       </form>
       </html>
@@ -42,7 +44,7 @@ describe "Multiple nested params" do
             "1" => [ {"name" => "Jenny", "gender"=>"Mother"} ]
           }
         }
-      }
+      }, "emptyField" => ""
     }
 
     webrat_session.should_receive(:post).with("/family", params)
