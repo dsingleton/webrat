@@ -17,8 +17,7 @@ module Webrat #:nodoc:
     end
 
     def get(url, data, headers = nil)
-      params = data.map { | h | h.to_a.flatten }
-      options = {:url => url, :headers => headers, :params => data}
+      options = {:url => url, :headers => headers, :params => data.sort}
       @response = mechanize.get(options)
     end
 
